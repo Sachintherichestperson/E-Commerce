@@ -10,31 +10,45 @@ router.get("/SignUp", (req, res) => {
     res.render("Form");
 });
 
-router.post("/Sign-up",async (req, res) => {
-    const { username, email, Number, password } = req.body;
+router.post("/Sign-up", async (req, res) => {
+    try {
+        const { username, email, Number, password } = req.body;
 
-    const newBuyer = new Buyer({
-        username,
-        email,
-        Number,
-        password
-    });
-    await newBuyer.save();
+        // Check if user already exists
+        const existingUser = await Buyer.findOne({ email });
+        if (existingUser) {
+            return res.status(400).send("User already exists");
+        }
 
-    const JWT_SECRET = "u34yti3yv7ey4v84tv78yrf7y4vt48";
-    const token = jwt.sign({ email: newBuyer.email, id: newBuyer._id }, JWT_SECRET, {
-        expiresIn: "7d",
-    });
+        const newBuyer = new Buyer({
+            username,
+            email,
+            Number,
+            password
+        });
+        await newBuyer.save(); // Save user
 
-    // Set cookie (optional)
-    res.cookie("userSession", token, {
-        maxAge: 24 * 60 * 60 * 1000, // 1 day
-        httpOnly: true, // Security best practice
-        secure: false // Set to true in production (HTTPS)
-    });
+        const JWT_SECRET = "u34yti3yv7ey4v84tv78yrf7y4vt48";
+        const token = jwt.sign(
+            { email: newBuyer.email, id: newBuyer._id },
+            JWT_SECRET,
+            { expiresIn: "7d" }
+        );
 
-    res.redirect("/");
+        // Set cookie (optional)
+        res.cookie("userSession", token, {
+            maxAge: 24 * 60 * 60 * 1000, // 1 day
+            httpOnly: true, // Security best practice
+            secure: false // Set to true in production (HTTPS)
+        });
+
+        return res.redirect("/"); // ✅ Use return to prevent duplicate responses
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+    }
 });
+
 
 router.get("/", isloggedin,async (req, res) => {
     const products = await Product.find().limit(6);
