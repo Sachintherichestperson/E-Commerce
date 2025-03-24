@@ -20,7 +20,6 @@ module.exports = async function (req, res, next) {
         req.user = buyer;
         next();
     } catch (error) {
-        console.error("JWT Verification Error:", error);
-        return res.status(401).json({ message: "Unauthorized: Invalid token" });
+        return res.redirect("/")
     }
 };
