@@ -6,7 +6,7 @@ module.exports = async function (req, res, next) {
         if (!req.cookies.userSession) {
             console.log("No token found");
             return res.status(401).json({ message: "Unauthorized: No token provided" });
-            res.redirect("/")
+            res.redirect("/Sign-up");
         }
 
         let decoded = jwt.verify(req.cookies.userSession, "u34yti3yv7ey4v84tv78yrf7y4vt48");
