@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: black;
+            justify-content: center;
+            display: flex;
+            align-items: center;
+            height: 90vh;
+        }
+        section{
+            justify-content: center;
+            display: flex;
+            align-items: center;
+        }
+        .container{
+            background-color: white;
+            width: 400px;
+            height: 380px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #form{
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+        .Sign-Up{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+        }
+        .Sign-Up.active{
+            display: none;
+        }
+        form{
+            width: 100%;
+            height: 100%;
+            background-color: #4b4a4a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        input{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #393939;
+            color: white;
+            border: 1px solid rgb(144, 144, 144);
+        }
+        input::placeholder{
+            color: rgb(126, 126, 126);
+            opacity: 1;
+        }
+        .button{
+            background-color: rgb(27, 27, 189);
+            color: white;
+            cursor: pointer;
+        }
+        .Sign-In{
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            padding: 30px;
+            display: none;
+        }
+        .Sign-In.active{
+            display: flex;
+        }
+        .Login{
+            cursor: pointer;
+        }
+        .Register{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div class="container">
+            <div id="form">
+                <form action="/Sign-up" method="post" class="Sign-Up">
+                    <h1>Sign-Up</h1>
+                        <input type="text" name="username" id="username" placeholder="Username" value="user">
+                        <input type="email" name="email" id="email" placeholder="Email" value="email@gmail.com">
+                        <input type="number" name="number" id="number" placeholder="Number" value="7">
+                        <input type="password" name="password" id="password" placeholder="Password" value="124235">
+                        <input type="submit" value="Submit" class="button">
+                        <div class="Login">Login</div>
+                </form>
+                <form action="" method="post" class="Sign-In">
+                    <h1>
+                        Sign-In
+                    </h1>
+                        <input type="email" name="email" id="email" placeholder="Email">
+                        <input type="password" name="password" id="password" placeholder="Password">
+                        <input type="button" value="Submit" class="button">
+                        <div class="Register">Sign-Up</div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <script>
+        const Login = document.querySelector('.Login');
+
+        Login.addEventListener('click', () => {
+            console.log('clicked');
+            const Sign_Up = document.querySelector('.Sign-Up');
+            const Sign_In = document.querySelector('.Sign-In');
+
+            Sign_Up.classList.toggle('active');
+            Sign_In.classList.toggle('active');
+        });
+
+        const Register = document.querySelector('.Register');
+
+        Register.addEventListener('click', () => {
+            console.log('clicked');
+            const Sign_Up = document.querySelector('.Sign-Up');
+            const Sign_In = document.querySelector('.Sign-In');
+
+            Sign_Up.classList.toggle('active');
+            Sign_In.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

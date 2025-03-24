@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        form{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input{
+            padding: 10px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div class="container">
+            <form action="/creator/sachin/product-add" method="post" enctype="multipart/form-data">
+                <input type="text" name="name" placeholder="Product-Name">
+                <input type="text" name="description" placeholder="Product-Description">
+                <input type="number" name="quantity" placeholder="Quantity">
+                <input type="file" name="Productimage" placeholder="Image">
+                <input type="number" name="price" placeholder="Price">
+                <input type="submit" name="submit" value="Submit">
+            </form>
+        </div>
+    </section>
+</body>
+</html>

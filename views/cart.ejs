@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        /* Navigation Bar */
+        nav {
+            width: 100%;
+            padding: 15px 50px;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0px 4px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        nav img {
+            width: 140px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 17px;
+            font-weight: 600;
+            padding: 8px 15px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffcc00;
+            border-radius: 5px;
+        }
+
+        .active{
+            background-color: #ffc500;
+            border-radius: 30px;
+        }
+
+        /* Cart Container */
+        .cart-container {
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .cart-title {
+            text-align: center;
+            font-size: 26px;
+            margin-bottom: 15px;
+        }
+
+        /* Cart Items */
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .cart-item:hover {
+            transform: scale(1.02);
+        }
+
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .item-details {
+            flex: 1;
+            margin-left: 10px;
+        }
+
+        .item-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .item-price {
+            color: #ffcc00;
+            font-size: 16px;
+        }
+
+        /* Quantity Control */
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity button {
+            width: 30px;
+            height: 30px;
+            background: #ffcc00;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .quantity button:hover {
+            background: #ffaa00;
+        }
+
+        .quantity span {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Remove Button */
+        .remove-btn {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .remove-btn:hover {
+            background: #cc0000;
+        }
+
+        /* Checkout Button */
+        .checkout {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: #ffcc00;
+            color: black;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+            box-shadow: 0 5px 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .checkout-btn:hover {
+            background: #ffaa00;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <img src="logo.png" alt="Logo">
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/Shop">Shop</a>
+            <a href="/Cart" class="active">Cart</a>
+            <a href="/Contact-Us">Contact</a>
+        </div>
+    </nav>
+
+
+    <!-- Cart Container -->
+    <div class="cart-container">
+        <div class="cart-title">Your Shopping Cart</div>
+
+        <% products.forEach(function(product) { %>
+        <div class="cart-item">
+            <img src="/<%= product.productId.Productname %>/image/<%= product.productId._id %>" alt="Product">
+            <div class="item-details">
+                <div class="item-name"><%= product.productId.Productname %></div>
+                <div class="item-price">₹ <%= product.productId.Productprice %></div>
+            </div>
+            <div class="quantity">
+                <button onclick="decreaseQuantity(this, '<%= product.productId._id %>')">-</button>
+                <span>1</span>
+                <button onclick="increaseQuantity(this, '<%= product.productId._id %>')">+</button>
+            </div>
+            <button class="remove-btn" onclick="removeItem(this, '<%= product.productId._id %>')">Remove</button>
+        </div>
+        <% }); %>
+        <!-- Checkout Button -->
+        <div class="checkout">
+            <% if (products.length > 0){ %>
+                <form action="/checkout/<%= buyer.username %>/<%= buyer._id %>" method="post">
+                    <button class="checkout-btn">Proceed to Checkout</button>
+                </form>
+            <% }else{ %>
+                <form action="/" method="get">
+                    <button class="checkout-btn">Shop Now</button>
+                </form>
+            <% } %>
+        </div>
+    </div>
+    <script>
+        async function increaseQuantity(button, productId) {
+            let quantitySpan = button.previousElementSibling;
+            let quantity = parseInt(quantitySpan.textContent);
+            quantitySpan.textContent = quantity + 1;
+            console.log('increase function hitted')
+
+            try {
+                const response = await fetch(`/addtocart/${productId}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({})
+                });
+
+                const data = await response.json();
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+
+      async function decreaseQuantity(button, productId) {
+    let quantitySpan = button.nextElementSibling;
+    let quantity = parseInt(quantitySpan.textContent);
+
+    if (quantity > 1) {
+        quantitySpan.textContent = quantity - 1;
+    } else if (quantity === 1) {
+        // If quantity is 1, remove the item after decreasing
+        quantitySpan.textContent = 0;
+        
+        // Remove the item from the cart
+        const cartItem = button.closest('.cart-item');
+        cartItem.remove();
+
+        try {
+            const response = await fetch(`/removeproduct/${productId}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({})
+            });
+
+            const data = await response.json();
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+}
+async function decreaseQuantity(button, productId) {
+    let quantitySpan = button.nextElementSibling;
+    let quantity = parseInt(quantitySpan.textContent);
+
+    if (quantity > 1) {
+        quantitySpan.textContent = quantity - 1;
+    } else if (quantity === 1) {
+        // If quantity is 1, remove the item after decreasing
+        quantitySpan.textContent = 0;
+        
+        // Remove the item from the cart
+        const cartItem = button.closest('.cart-item');
+        cartItem.remove();
+
+        try {
+            const response = await fetch(`/removeproduct/${productId}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({})
+            });
+
+            const data = await response.json();
+
+            // Check if the cart is empty and update the checkout section
+            updateCheckoutSection();
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+}
+
+async function updateCheckoutSection() {
+    const cartContainer = document.querySelector('.cart-container');
+    const checkoutSection = document.querySelector('.checkout');
+    
+    // Check if there are any products left in the cart
+    const products = document.querySelectorAll('.cart-item');
+    
+    if (products.length === 0) {
+        // If no products left, show the Shop Now button
+        checkoutSection.innerHTML = `
+            <form action="/" method="get">
+                <button class="checkout-btn">Shop Now</button>
+            </form>
+        `;
+    }
+}
+
+async function removeItem(button, productId) {
+    let cartItem = button.closest('.cart-item'); // Get the cart item container
+    cartItem.remove(); // Remove the product item from the cart
+
+    try {
+        // Make a POST request to remove the item from the backend
+        const response = await fetch(`/removecart/${productId}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({})
+        });
+
+        // After removing the product, check if the cart is empty and update the checkout section
+        updateCheckoutSection();
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+    </script>
+</body>
+</html>

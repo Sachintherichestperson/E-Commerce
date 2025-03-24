@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: #0d0d0d;
+        }
+        a{
+            text-decoration: none;
+            color: white;
+        }
+        .product {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 350px;
+            box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
+        }
+
+        .product:hover {
+            animation: product 0.3s ease-in-out forwards;
+        }
+
+@keyframes product {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+
+        .product img {
+            width: 100%;
+            border-radius: 10px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .product-description {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-bottom: 10px;
+        }
+
+        .buttons{
+            width: 100%;
+            display: flex;
+            gap: 10px;
+        }
+
+        .product-Edit {
+            background: #ffcc00;
+            color: #0d0d0d;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+        .product-Qty {
+            background: #a00a0a;
+            color: #0d0d0d;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+
+        .product-Dlt {
+            background: #c70101;
+            color: #0d0d0d;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+
+        .product-add:hover {
+            background: #e6b800;
+            transform: scale(1.25);
+        }
+    </style>
+</head>
+<body>
+    <% Allproducts.forEach(function(product){ %>
+        <div class="product" id="product<%= product._id %>">
+            <a href="/<%= product.Productname %>/<%= product._id %>/">
+                <img src="/creator/sachin/product-image/<%= product._id %>" alt="">
+                <div class="product-name"><%= product.Productname %></div>
+                <div class="product-description"><%= product.Productdescription %></div>
+                <div class="product-price">₹ <%= product.Productprice %></div>
+            </a>
+                <div class="buttons">
+                    <a href="/creator/sachin/product-edit/<%= product._id %>"><div class="product-Edit"> Edit Product</div></a>
+                    <div class="product-Qty" onclick="OutofCart('<%= product._id %>')"> Out Of Stock </div>
+                    <div class="product-Dlt" onclick="DeleteProduct('<%= product._id %>')"> Delete Product </div>
+                </div>
+        </div>
+    <% }) %>
+    <script>
+        function OutofCart(url){
+            fetch(`/creator/sachin/product-Qty/${url}`,{
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({})
+            })
+        }
+
+        async function DeleteProduct(url){
+            const response = await fetch(`/creator/sachin/product-Delete/${url}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json"},
+                body: JSON.stringify({})
+            })
+
+            const data = await response.json();
+            if(response.ok){
+                document.getElementById(`product${url}`).style.display = "none";
+            }else{
+                alert("failed to delete")
+            }
+        }
+    </script>
+</body>
+</html>

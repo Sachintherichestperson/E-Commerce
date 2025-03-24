@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #000; /* Black background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .checkout-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            width: 450px;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .checkout-container h2 {
+            color: #ffffff;
+            font-size: 26px;
+            font-weight: 600;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        }
+
+        .product img {
+            width: 100%;
+            border-radius: 15px;
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .product img:hover {
+            transform: scale(1.05);
+        }
+
+        .product h3 {
+            margin-top: 15px;
+            font-weight: 600;
+            font-size: 22px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .product p {
+            color: #bdbdbd;
+            font-size: 15px;
+        }
+
+        .checkout-btn {
+    background: #ffcc00;
+    color: white;
+    border: none;
+    padding: 14px 22px;
+    width: 100%;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin-top: 15px;
+    box-shadow: 0 0 15px #d5ab00, 
+                0 0 30px #bf9901;
+    position: relative;
+    overflow: hidden;
+}
+
+.checkout-btn::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    opacity: 0;
+}
+
+.checkout-btn:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.checkout-btn:hover {
+    background: linear-gradient(317deg, #d6d101, #f6ee04);
+    transform: translateY(-3px) scale(1.07);
+    box-shadow: 0 0 10px #FFC107, 0 0 5px #c7b308;
+}
+
+.checkout-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 10px rgba(255, 204, 0, 0.5), 
+                0 0 20px rgba(255, 204, 0, 0.3);
+}
+
+
+
+
+
+
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="checkout-container">
+        <h2>Checkout</h2>
+        <div class="product">
+            <img src="/creator/sachin/product-image/<%= product._id %>" alt="Product Image">
+            <h3><%= product.Productname %></h3>
+            <p>Price: $<%= product.Productprice %></p>
+            <p>Description: <%= product.Productdescription %></p>
+            <form action="/checkout" method="POST">
+                <input type="hidden" name="productId" value="<%= product._id %>">
+                <button type="submit" class="checkout-btn">Proceed to Payment</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

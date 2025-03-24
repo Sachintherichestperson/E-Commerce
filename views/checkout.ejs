@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <form id="paymentForm">
+        <button id="rzp-button1">Pay</button>
+    </form>
+    <script>
+        const options = {
+            key: "rzp_test_HPAKSJHzTmYhop", // Replace with your Razorpay test/live Key ID
+            amount: 500, // Amount in paise (₹500)
+            currency: "INR",
+            name: "Your Company Name",
+            description: "Test Transaction",
+            handler: function (response) {
+                // Redirect after successful payment
+                window.location.href = `/`;
+            },
+            prefill: {
+                name: "Test User",
+                email: "test.user@example.com",
+                contact: "9999999999"
+            },
+            theme: {
+                color: "#3399cc"
+            }
+        };
+
+        const rzp = new Razorpay(options);
+
+        document.getElementById("rzp-button1").onclick = function (e) {
+            rzp.open();
+            e.preventDefault();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            margin: 0;
+            padding: 0;
+            background-color: black;
+        }
+        .PageTitle{
+            width: 100%;
+            padding: 20px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(16, 16, 16);
+        }
+        h1{
+            color: white;
+            font-size: 30px;
+        }
+        .product {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 350px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .product:hover {
+            animation: product 0.3s ease-in-out forwards;
+        }
+
+        @keyframes product {
+        0% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(1.1);
+        }
+    }
+
+        .product img {
+            width: 100%;
+            border-radius: 10px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .product-description {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-bottom: 10px;
+        }
+
+        .product-add {
+            background: #ffcc00;
+            color: #0d0d0d;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+
+        .product-add:hover {
+            background: #e6b800;
+            transform: scale(1.05);
+        }
+
+        .Hotproducts{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div class="PageTitle">
+            <h1>🚀 Hot Deals 🚀</h1>
+        </div>
+        <div class="Hotproducts">
+            <% products.forEach(function(product) { %>
+            <div class="product">
+                <a href="">
+                    <img src="trial.png" alt="">
+                    <div class="product-name"><%= product.Productname %></div>
+                    <div class="product-description"><%= product.Productdescription %></div>
+                    <div class="product-price">₹ <%= product.Productprice %></div>
+                </a>
+                <div class="product-add" onclick="addToCart('<%= product._id %>')">
+                    <i class="fas fa-cart-plus"></i> Add to Cart
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </section>
+    <script>
+        async function addToCart(productId) {
+            try {
+                const response = await fetch(`/addtocart/${productId}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({})
+                });
+                console.log("Product added:", productId);
+            } catch (error) {
+                console.error("Error adding product to cart:", error);
+            }
+        }
+        
+    </script>
+</body>
+</html>

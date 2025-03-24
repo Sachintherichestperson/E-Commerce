@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            color: white;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(229, 255, 0, 0.8);
+            width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #bcc203;
+            text-transform: uppercase;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 14px;
+            text-align: left;
+            color: #b6d105;
+        }
+
+        input {
+            padding: 12px;
+            border: 1px solid rgba(230, 255, 2, 0.5);
+            border-radius: 6px;
+            font-size: 16px;
+            background: black;
+            color: white;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        input:focus {
+            border-color: #f6ff00;
+            box-shadow: 0 0 8px rgba(251, 255, 0, 0.8);
+        }
+
+        button {
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: #e1ff00cc;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background: #becc00;
+            box-shadow: 0 0 10px rgba(225, 255, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Product Details</h2>
+        <form action="">
+            <label for="name">Name</label>
+            <input type="text" name="name" placeholder="Enter product name" value="<%= product.Productname %>">
+            
+            <label for="price">Price</label>
+            <input type="text" name="price" placeholder="Enter product price" value="<%= product.Productprice %>">
+            
+            <label for="description">Description</label>
+            <input type="text" name="description" placeholder="Enter product description" value="<%= product.Productdescription %>">
+            
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+</body>
+</html>
