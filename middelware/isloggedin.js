@@ -4,7 +4,7 @@ const Buyer = require("../mongoose/Buyer");
 module.exports = async function (req, res, next) {
     try {
         if (!req.cookies.userSession) {
-            res.redirect("/SignUp");
+            return res.redirect("/SignUp");
         }
 
         let decoded = jwt.verify(req.cookies.userSession, "u34yti3yv7ey4v84tv78yrf7y4vt48");
@@ -18,6 +18,7 @@ module.exports = async function (req, res, next) {
         req.user = buyer;
         next();
     } catch (error) {
+        console.log(error);
         return res.redirect("/SignUp")
     }
 };
