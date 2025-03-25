@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const dbgr = require("debug")("development:mongoose");
 require("dotenv").config();  // Load environment variables
 
+console.log("MONGO_URI:", process.env.MONGO_URI);
 
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
