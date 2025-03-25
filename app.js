@@ -15,14 +15,16 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 
 
-app.use(
-    expressSession({
-        secret: process.env.EXPRESS_SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false,
-        cookie: { secure: false, httpOnly: true, maxAge: 24 * 60 * 60 * 7000 }  // 1 day
+app.use(session({
+    secret: process.env.EXPRESS_SESSION_SECRET, // Keep it safe
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URI, // Use your MongoDB URI
+        collectionName: "sessions",
+        ttl: 14 * 24 * 60 * 60 // Sessions last for 14 days
     })
-);
+}));
 
 app.use("/", Buyer)
 app.use("/creator/sachin", Seller)
