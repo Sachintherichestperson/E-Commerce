@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Buyer = require("../mongoose/Buyer");
+require("dotenv")
 
 module.exports = async function (req, res, next) {
     try {
@@ -7,7 +8,7 @@ module.exports = async function (req, res, next) {
             return res.redirect("/SignUp");
         }
 
-        let decoded = jwt.verify(req.cookies.userSession, "u34yti3yv7ey4v84tv78yrf7y4vt48");
+        let decoded = jwt.verify(req.cookies.userSession, process.env.JWT_SECRET);
 
         let buyer = await Buyer.findOne({ email: decoded.email }).select("-password");
         

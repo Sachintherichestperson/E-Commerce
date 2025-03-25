@@ -5,6 +5,8 @@ const Buyer = require("../mongoose/Buyer");
 const Product = require("../mongoose/Products");
 const isloggedin = require("../middelware/isloggedin");
 const jwt = require("jsonwebtoken");
+require("dotenv");
+
 
 router.get("/SignUp", (req, res) => {
     res.render("Form");
@@ -28,7 +30,7 @@ router.post("/Sign-up", async (req, res) => {
         });
         await newBuyer.save(); // Save user
 
-        const JWT_SECRET = "u34yti3yv7ey4v84tv78yrf7y4vt48";
+        const JWT_SECRET = process.env.JWT_SECRET;
         const token = jwt.sign(
             { email: newBuyer.email, id: newBuyer._id },
             JWT_SECRET,
@@ -37,9 +39,9 @@ router.post("/Sign-up", async (req, res) => {
 
         // Set cookie (optional)
         res.cookie("userSession", token, {
-            maxAge: 24 * 60 * 60 * 1000, // 1 day
+            maxAge: 7 * 24 * 60 * 60 * 1000,
             httpOnly: true, // Security best practice
-            secure: false // Set to true in production (HTTPS)
+            secure: process.env.NODE_ENV === "production" ? true : false, // Security best practice
         });
 
         return res.redirect("/"); // ✅ Use return to prevent duplicate responses

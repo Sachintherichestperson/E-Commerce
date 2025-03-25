@@ -6,6 +6,7 @@ const Buyer = require("./router/Buyer");
 const Seller = require("./router/Seller");
 const db = require("./config/mongoose-connections");
 const expressSession = require("express-session");
+require("dotenv");
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -16,10 +17,10 @@ app.set("view engine", "ejs");
 
 app.use(
     expressSession({
-        secret: "93847n48vnvt93w67t97",  // Change this to a strong secret
+        secret: process.env.EXPRESS_SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
-        cookie: { secure: false, httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }  // 1 day
+        cookie: { secure: false, httpOnly: true, maxAge: 24 * 60 * 60 * 7000 }  // 1 day
     })
 );
 
@@ -28,4 +29,4 @@ app.use("/creator/sachin", Seller)
 
 
 
-app.listen(3000)
+app.listen(process.env.PORT);
