@@ -5,7 +5,7 @@ const path = require("path");
 const Buyer = require("./router/Buyer");
 const Seller = require("./router/Seller");
 const db = require("./config/mongoose-connections");
-const expressSession = require("express-session");
+const session = require("express-session");  // Import express-session
 require("dotenv");
 
 app.use(express.json());
